@@ -13,15 +13,18 @@ export function Player() {
     currentEpisodeIndex,
     isPlaying,
     togglePlay,
+    setPlayingState,
   } = useContext(PlayerContext);
 
   useEffect(() => {
-    if (!audioRef.current) return;
+    if (!audioRef.current) {
+      return;
+    }
 
     if (isPlaying) {
-      audioRef.current.play;
+      audioRef.current.play();
     } else {
-      audioRef.current.pause;
+      audioRef.current.pause();
     }
   }, [isPlaying]);
 
@@ -68,7 +71,15 @@ export function Player() {
           <span>00:00</span>
         </div>
 
-        {episode && <audio src={episode.url} ref={audioRef} autoPlay />}
+        {episode && (
+          <audio
+            src={episode.url}
+            ref={audioRef}
+            autoPlay
+            onPlay={() => setPlayingState(true)}
+            onPause={() => setPlayingState(false)}
+          />
+        )}
 
         <div className={styles.buttons}>
           <button type="button" disabled={!episode}>
