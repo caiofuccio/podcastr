@@ -15,6 +15,7 @@ type PlayerContextData = {
   play: (episode: Episode) => void;
   togglePlay: () => void;
   setPlayingState: (state: boolean) => void;
+  playList: (list: Episode[], index: number) => void;
 };
 
 type PlayerContextProviderProps = {
@@ -31,6 +32,12 @@ export function PlayerContextProvider({ children }) {
   function play(episode: Episode) {
     setEpisodeList([episode]);
     setCurrentEpisodeIndex(0);
+    setIsPlaying(true);
+  }
+
+  function playList(list: Episode[], index: number) {
+    setEpisodeList(list);
+    setCurrentEpisodeIndex(index);
     setIsPlaying(true);
   }
 
@@ -51,6 +58,7 @@ export function PlayerContextProvider({ children }) {
         isPlaying,
         togglePlay,
         setPlayingState,
+        playList,
       }}
     >
       {children}
